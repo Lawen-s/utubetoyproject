@@ -24,7 +24,7 @@ const Playlist = styled.div`
   }
 `;
 
-export default function PlayList({ handleClick, videoInfo, imgs }) {
+export default function PlayList({ handleClick, imgs }) {
 
   return (
     <Body>

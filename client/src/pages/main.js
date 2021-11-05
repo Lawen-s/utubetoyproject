@@ -43,7 +43,7 @@ const StyledPlaylist = styled.div`
   }
 `;
 
-export default function Main({ videoInfo, handleClick, imgs, subscription, subscriptionRefresh, setSubscription }) {
+export default function Main({ videoInfo, handleClick, imgs, subscription, subscriptionRefresh, setSubscription, showComment }) {
 
   return (
     <Body>
@@ -60,9 +60,10 @@ export default function Main({ videoInfo, handleClick, imgs, subscription, subsc
                 playing={true}
               />
             </PlayerWrapper>
-            <VideoInfo videoInfo={videoInfo} setSubscription={setSubscription} subscription={subscription} subscriptionRefresh={subscriptionRefresh} />
+            <VideoInfo videoInfo={videoInfo} setSubscription={setSubscription}
+              subscription={subscription} subscriptionRefresh={subscriptionRefresh} />
           </StyledMain>
-          <Comments videoInfo={videoInfo} />
+          <Comments videoInfo={videoInfo} showComment={showComment} />
         </div>
         <StyledPlaylist>
           {imgs.map((thumbnail) => (

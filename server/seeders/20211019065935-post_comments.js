@@ -2,6 +2,14 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert("post_comments", [
+      {
+        userId: 1,
+        postId: 3,
+        comment: "구독이요",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }]
     /**
      * Add seed commands here.
      *
@@ -14,6 +22,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete("post_comments", null, {});
     /**
      * Add commands to revert seed here.
      *

@@ -23,11 +23,11 @@ function App() {
   const [imgs, setImgs] = useState([]);
   const [imgs_, setImgs_] = useState([]);
   const [subscription, setSubscription] = useState(JSON.parse(localStorage.getItem("subscription")));
-
+  const [showComment, setShowComment] = useState(null);
 
   const handleClick = (ThumbnailInfo) => {
     // const imgs_one = imgs.filter(img => img.id !== ThumbnailInfo.id)
-    // setImgs_(imgs_one);
+    //console.log(ThumbnailInfo)
     axios
       .get(`http://localhost:4000/play/${ThumbnailInfo.id}`, {
         "Content-Type": "application/json",
@@ -35,10 +35,21 @@ function App() {
       })
       .then((res) => {
         localStorage.setItem("clickedVideo", JSON.stringify(res.data));
-        //console.log(res.data.user.picture)
         setVideoInfo(res.data);
+        getComment(res.data)
       })
       .catch((err) => alert(err));
+  }
+
+  //댓글 불러오기
+  const getComment = (data) => {
+    console.log(data.id)
+    axios.get(`http://localhost:4000/comment/${data.id}`, { "Content-Type": "application/json" })
+      .then((res) => {
+        console.log(res);
+        setShowComment(res.data.data);
+      })
+
   }
 
   const pageRefresh = () => {
@@ -64,6 +75,7 @@ function App() {
       })
   }
 
+
   useEffect(() => {
     pageRefresh();
     subscriptionRefresh();
@@ -80,7 +92,8 @@ function App() {
             <PlayList imgs={imgs} handleClick={handleClick} videoInfo={videoInfo} />
           </Route>
           <Route path="/main">
-            <Main videoInfo={videoInfo} subscriptionRefresh={subscriptionRefresh} imgs={imgs_} handleClick={handleClick} setSubscription={setSubscription} subscription={subscription} />
+            <Main videoInfo={videoInfo} subscriptionRefresh={subscriptionRefresh} showComment={showComment}
+              imgs={imgs_} handleClick={handleClick} setSubscription={setSubscription} subscription={subscription} />
           </Route>
           <Route path="/subscriptions">
             <Subscriptions imgs={imgs} handleClick={handleClick} />
